@@ -1,7 +1,7 @@
 base_view: analytics_prod_ecomm__order_items
 
 ai_context: |
-  This topic models an online retailer's order line items — one row per item within an order.
+  This topic models an online shop retailer's order line items — one row per item within an order.
   Base view: analytics_prod_ecomm__order_items (orders), joined to:
     - analytics_prod_ecomm__users (the customer / buyer)
     - analytics_prod_ecomm__products (the product catalog, reached via the inventory_items bridge)
