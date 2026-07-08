@@ -23,34 +23,4 @@ ai_context: |
 
 joins:
   analytics_prod_ecomm__users: {}
-  analytics_prod_ecomm__inventory_items:
-    analytics_prod_ecomm__products: {}
-
-views:
-  analytics_prod_ecomm__order_items:
-    dimensions:
-      discount_amount:
-        sql: "${analytics_prod_ecomm__products.retail_price} - ${analytics_prod_ecomm__order_items.sale_price}"
-        format: currency_2
-        label: Discount Amount
-        description: Difference between the product's list price and the actual sale price for this line item.
-    measures:
-      total_list_price:
-        sql: "${analytics_prod_ecomm__products.retail_price}"
-        aggregate_type: sum
-        format: currency_2
-        label: Total List Price
-        description: Total product list (retail) price across line items, before discount.
-
-      total_discount:
-        sql: "${analytics_prod_ecomm__products.retail_price} - ${analytics_prod_ecomm__order_items.sale_price}"
-        aggregate_type: sum
-        format: currency_2
-        label: Total Discount
-        description: Total discount given (list price minus sale price) across line items.
-
-      discount_rate:
-        sql: "${total_discount} / NULLIF(${total_list_price}, 0)"
-        format: percent_2
-        label: Discount Rate
-        description: Total discount as a share of total list price.
+  analytics_prod_ecomm__inventory_items: {}

@@ -8,97 +8,46 @@ dimensions:
     sql: '"ID"'
     format: ID
     primary_key: true
-    label: Customer ID
-    description: Unique identifier for a customer.
 
   first_name:
     sql: '"FIRST_NAME"'
-    label: First Name
 
   last_name:
     sql: '"LAST_NAME"'
-    label: Last Name
 
   email:
     sql: '"EMAIL"'
-    label: Email
-    tags: [pii]
 
   age:
     sql: '"AGE"'
-    format: number_0
-    label: Age
 
   city:
     sql: '"CITY"'
-    label: City
-    synonyms: [town]
 
   state:
     sql: '"STATE"'
-    label: State / Region
 
   country:
     sql: '"COUNTRY"'
-    label: Country
-    synonyms: [nation]
 
   zip:
     sql: '"ZIP"'
-    format: ID
-    label: Zip Code
 
   latitude:
     sql: '"LATITUDE"'
-    label: Latitude
 
   longitude:
     sql: '"LONGITUDE"'
-    label: Longitude
 
   gender:
     sql: '"GENDER"'
-    label: Gender
 
   created_at:
     sql: '"CREATED_AT"'
-    label: Signup Date
-    description: Date the customer account was created.
-    synonyms: [registration date, join date]
 
   traffic_source:
     sql: '"TRAFFIC_SOURCE"'
-    label: Traffic Source
-    description: Acquisition channel that brought the customer (e.g. Organic, Email, Search, Display, Facebook).
-    synonyms: [acquisition channel, marketing channel, source]
-
-  # --- New derived dimensions ---
-  full_name:
-    sql: "${first_name} || ' ' || ${last_name}"
-    label: Full Name
-    description: Customer's first and last name combined.
-
-  age_group:
-    sql: "CASE WHEN ${age} < 25 THEN '18-24' WHEN ${age} < 35 THEN '25-34' WHEN ${age} < 45 THEN '35-44' WHEN ${age} < 55 THEN '45-54' ELSE '55+' END"
-    label: Age Group
-    description: Customer age bucketed into demographic bands.
-    synonyms: [age band, age bracket]
-
-  signup_cohort_month:
-    sql: "DATE_TRUNC('month', ${created_at})"
-    label: Signup Cohort (Month)
-    description: Month the customer signed up, for cohort analysis.
 
 measures:
   count:
     aggregate_type: count
-    label: Number of Customers
-    description: Count of customers.
-    synonyms: [customers, users, buyers]
-
-  average_age:
-    sql: ${age}
-    aggregate_type: average
-    format: number_1
-    label: Average Age
-    description: Average age of customers.
