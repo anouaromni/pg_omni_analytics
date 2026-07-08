@@ -2,3 +2,4 @@ base_view: analytics_prod_ecomm__order_items
 
 joins:
   analytics_prod_ecomm__users: {}
+  analytics_prod_ecomm__inventory_items: {}
