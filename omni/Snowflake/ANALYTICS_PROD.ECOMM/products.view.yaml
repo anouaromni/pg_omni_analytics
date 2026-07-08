@@ -8,32 +8,98 @@ dimensions:
     sql: '"ID"'
     format: ID
     primary_key: true
+    label: Product ID
+    description: Unique identifier for a product.
 
   cost:
     sql: '"COST"'
+    format: currency_2
+    label: Unit Cost
+    description: Cost to the retailer for one unit of the product.
+    synonyms: [product cost]
 
   category:
     sql: '"CATEGORY"'
+    label: Category
+    description: Product category (e.g. Jeans, Tops, Accessories).
+    synonyms: [product category, type]
 
   name:
     sql: '"NAME"'
+    label: Product Name
+    synonyms: [product, item name]
 
   brand:
     sql: '"BRAND"'
+    label: Brand
+    synonyms: [manufacturer, make]
 
   retail_price:
     sql: '"RETAIL_PRICE"'
+    format: currency_2
+    label: Retail Price
+    description: List price of the product.
+    synonyms: [list price, msrp]
 
   department:
     sql: '"DEPARTMENT"'
+    label: Department
+    description: High-level product grouping (e.g. Men, Women).
 
   sku:
     sql: '"SKU"'
+    format: ID
+    label: SKU
+    description: Stock keeping unit code.
 
   distribution_center_id:
     sql: '"DISTRIBUTION_CENTER_ID"'
     format: ID
+    label: Distribution Center ID
+
+  # --- New derived dimensions ---
+  unit_profit:
+    sql: "${retail_price} - ${cost}"
+    format: currency_2
+    label: Unit Profit
+    description: Profit per unit at list price (retail price minus cost).
+
+  unit_margin_rate:
+    sql: "(${retail_price} - ${cost}) / NULLIF(${retail_price}, 0)"
+    format: percent_2
+    label: Unit Margin Rate
+    description: Per-unit margin as a percentage of retail price.
+    synonyms: [markup, product margin]
+
+  retail_price_band:
+    sql: "CASE WHEN ${retail_price} < 25 THEN '1. <$25' WHEN ${retail_price} < 50 THEN '2. $25-$50' WHEN ${retail_price} < 100 THEN '3. $50-$100' ELSE '4. $100+' END"
+    label: Retail Price Band
+    description: Retail price bucketed into tiers.
 
 measures:
   count:
     aggregate_type: count
+    label: Number of Products
+    description: Count of products.
+    synonyms: [products, sku count, product count]
+
+  average_retail_price:
+    sql: ${retail_price}
+    aggregate_type: average
+    format: currency_2
+    label: Average Retail Price
+    description: Average list price across products.
+
+  average_cost:
+    sql: ${cost}
+    aggregate_type: average
+    format: currency_2
+    label: Average Cost
+    description: Average unit cost across products.
+
+  average_unit_profit:
+    sql: "${retail_price} - ${cost}"
+    aggregate_type: average
+    format: currency_2
+    label: Average Unit Profit
+    description: Average per-unit profit (retail price minus cost) across products.
